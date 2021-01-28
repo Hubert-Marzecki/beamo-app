@@ -1,52 +1,97 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, Modal, ScrollView } from 'react-native';
 import { AppLoading, Font } from 'expo';
-import AddCosmeticsModal from './components/AddCosmeticsModal'
-export default function App() {
+import AddCosmeticsModal from './components/AddCosmeticsModal';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Header, ListItem, Badge, Avatar } from 'react-native-elements';
+import ProductList from  './components/ProductList'
 
-  const [state, setState] = useState({
-    isModalOpen: false,
-    cosmetics: [{
-      name: String,
-      type: String,
-      Opended: String,
-      ExpiresIn: String,
-      Icon: String,
-      Photo: String,
-    }]
+export default function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const  [newCosmetic, setNewCosmetic] = useState({
+    name: "",
+    type: "",
+    opened: {},
+    expiresIn: "",
+    icon: "",
+    photo: "",
   })
+
+  const [prodList, setProdList] = useState([])
+
 
 function openModal() {
-  setState(s => {
-    return{ ...s, isModalOpen: true}
-  })
+ setIsModalOpen(true)
 }
+  const closeModal = function (){
+    setIsModalOpen(false)
+  }
 
-const closeModal = function (){
-  setState(s => {
-    return{ ...s, isModalOpen: false}
-  })
-}
+const updateNewProduct = (key, val) => {
+  setNewCosmetic(s => ({...s,  [key]: val}))
+  console.log(newCosmetic)
+  }
+
+  const addProductToList = (newProd) => {
+setProdList(s =>{
+      const list = s.concat(newProd)
+return list;
+    }
+)
+    console.log(newProd)
+    setIsModalOpen(false)
+  }
+
+  function displayProducts() {
+    if(prodList == []) {
+      return (
+          <View style={styles.body}>
+            <Image style={styles.img} source={require('./assets/cosmetics.png')} />
+            <Text style={styles.bodyText}>Add your cosmetics</Text>
+          </View>
+      )
+      } else {
+      return (
+          <View style={styles.bodyList}>
+            <ProductList items={prodList}/>
+          </View>
+          )
+      }
+  }
 
   return (
+      <SafeAreaProvider>
     <View style={styles.container}>
-      <View style={styles.nav}>
-      </View>
-      <View style={styles.body}>
-        <Image style={styles.img} source={require('./assets/cosmetics.png')} />
-        <Text style={styles.bodyText}>ADD YOUR COSMETICS</Text>
-      </View>
+      <Header
+          containerStyle={{
+            backgroundColor: '#4c69a5',
+            flex:1
+          }}
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: 'MY TITLE', style: {
+              color: '#fff',
+              fontWeight: 'bold',
+              fontSize: 20,
+              }
+          }}
+          rightComponent={{ icon: 'search', color: '#fff' }}
+      />
+
+      {displayProducts()}
 
       <View style={styles.footer}>
+        <View style={styles.buttonWrapper}>
         <Pressable onPress={openModal}>
-          <Text>I'm pressable!</Text>
+          <Text style={styles.buttonText}>+</Text>
         </Pressable>
+        </View>
       </View>
-      <StatusBar style="auto" />
 
-    <AddCosmeticsModal open={state.isModalOpen} closeModal={closeModal}/>
+      <StatusBar style="auto" />
+    <AddCosmeticsModal open={isModalOpen} closeModal={closeModal}  addProductToList={addProductToList}/>
     </View>
+      </SafeAreaProvider>
   );
 }
 
@@ -58,7 +103,7 @@ const styles = StyleSheet.create({
   },
   nav:{
     flex: 1,
-    backgroundColor: '#3D7383',
+    backgroundColor: '#4c69a5',
     alignSelf: 'stretch'
   },
   body:{
@@ -68,14 +113,41 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: '#EEE7DE',
   },
+  bodyList:{
+    flex: 8,
+    alignSelf: 'stretch',
+    backgroundColor: '#EEE7DE',
+  },
   bodyText:{
     fontWeight: 'bold',
     color: '#3D7383',
     fontSize: 20,
+    marginTop: 3
   },
   footer:{
     flex: 1,
-    backgroundColor: '#3D7383',
-    alignSelf: 'stretch'
+    backgroundColor: '#4c69a5',
+    alignSelf: 'stretch',
+      zIndex: 1,
+    alignItems: 'center',
+    position: 'relative'
+  },
+  buttonWrapper:{
+    width: 70,
+    height: 70,
+    borderRadius: 100 / 2,
+    backgroundColor: "#aad7f8",
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: "absolute",
+    top: -35,
+    borderColor: 'white',
+    borderWidth: 5
+  },
+  buttonText:{
+    fontSize: 40,
+    fontWeight: "bold",
+    color: '#EEE7DE'
   }
+
 });
