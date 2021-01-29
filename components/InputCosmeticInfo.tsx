@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Modal, TextInput } from 'react-native';
 import { Input } from 'react-native-elements';
+import { KeyNames } from '../Model';
 
-export default function  InputCosmeticInfo ({keyName, updateNewProduct, label}) {
-
-
+export default function  InputCosmeticInfo (props: {keyName: KeyNames, updateNewProduct : (keyName: KeyNames, val: any) => void , label: string}) {
 
     return (
         <View style={styles.container}>
             <Input style={styles.input}
-                   label={label}
+                   label={props.label}
                    labelStyle={{alignSelf: 'stretch', color: 'black', paddingTop: 30}}
                    inputStyle={{color: 'grey'}}
-                   onChangeText={val => updateNewProduct(keyName, val )}
+                   onChangeText={val => props.updateNewProduct(props.keyName, val )}
             />
         </View>
     )

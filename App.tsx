@@ -5,56 +5,61 @@ import { AppLoading, Font } from 'expo';
 import AddCosmeticsModal from './components/AddCosmeticsModal';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Header, ListItem, Badge, Avatar } from 'react-native-elements';
-import ProductList from  './components/ProductList'
+import ProductList from  './components/ProductList';
+import {Prod} from './Model';
+import HeaderLogo from './components/HeaderLogo';
 
-export default function App() {
+export default function App() : JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const  [newCosmetic, setNewCosmetic] = useState({
+  const  [newCosmetic, setNewCosmetic] = useState<Prod>({
     name: "",
     type: "",
     opened: {},
-    expiresIn: "",
+    expiresIn: 0,
     icon: "",
     photo: "",
+    id: ""
   })
 
-  const [prodList, setProdList] = useState([])
+  const [prodList, setProdList] = useState<Array<Prod>>([])
 
 
-function openModal() {
+function openModal() : void {
  setIsModalOpen(true)
 }
-  const closeModal = function (){
+  const closeModal = function () : void{
     setIsModalOpen(false)
   }
 
-const updateNewProduct = (key, val) => {
-  setNewCosmetic(s => ({...s,  [key]: val}))
-  console.log(newCosmetic)
+  const  deleteProd = (prod:Prod) => {
+    setProdList(s => {
+    const newList = s.filter(item => item.id !== prod.id)
+      return newList
+    })
   }
 
-  const addProductToList = (newProd) => {
-setProdList(s =>{
-      const list = s.concat(newProd)
-return list;
+
+  const addProductToList = (newProd: Prod) : void => {
+          setProdList(s =>{
+          const list = s.concat(newProd)
+          return list;
     }
 )
-    console.log(newProd)
     setIsModalOpen(false)
   }
 
-  function displayProducts() {
-    if(prodList == []) {
+  function displayProducts() : JSX.Element {
+    if(prodList.length === 0) {
       return (
           <View style={styles.body}>
-            <Image style={styles.img} source={require('./assets/cosmetics.png')} />
+            <Image style={styles.img} source={require('./assets/logo.png')} />
             <Text style={styles.bodyText}>Add your cosmetics</Text>
           </View>
       )
       } else {
       return (
           <View style={styles.bodyList}>
-            <ProductList items={prodList}/>
+            <ProductList prods={prodList} deleteProd={deleteProd}/>
           </View>
           )
       }
@@ -68,24 +73,18 @@ return list;
             backgroundColor: '#4c69a5',
             flex:1
           }}
-          leftComponent={{ icon: 'menu', color: '#fff' }}
-          centerComponent={{ text: 'MY TITLE', style: {
-              color: '#fff',
-              fontWeight: 'bold',
-              fontSize: 20,
-              }
-          }}
-          rightComponent={{ icon: 'search', color: '#fff' }}
+          // leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={<HeaderLogo/>}
+          // rightComponent={{ icon: 'search', color: '#fff' }}
       />
 
       {displayProducts()}
 
+
       <View style={styles.footer}>
-        <View style={styles.buttonWrapper}>
-        <Pressable onPress={openModal}>
+        <Pressable onPress={openModal } style={styles.buttonWrapper}>
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
-        </View>
       </View>
 
       <StatusBar style="auto" />
@@ -111,16 +110,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'stretch',
-    backgroundColor: '#EEE7DE',
+    backgroundColor: "#aad7f8",
+  },
+  img:{
+
   },
   bodyList:{
     flex: 8,
     alignSelf: 'stretch',
-    backgroundColor: '#EEE7DE',
+    backgroundColor: "#aad7f8",
   },
   bodyText:{
     fontWeight: 'bold',
-    color: '#3D7383',
+    color: 'white',
     fontSize: 20,
     marginTop: 3
   },
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -35,
     borderColor: 'white',
-    borderWidth: 5
+    borderWidth: 2
   },
   buttonText:{
     fontSize: 40,

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Modal } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
+import {KeyNames, Prod} from '../Model';
 
 
-export default function ExpiresInCounter({keyName, updateNewProduct }) {
+export default function ExpiresInCounter(props: {keyName:string, updateNewProduct: (keyName: KeyNames, value: any) => void }) {
     return (
         <View >
-            <NumericInput onChange={value => updateNewProduct(keyName, value)}
+            <NumericInput onChange={value => props.updateNewProduct(KeyNames.ExpiresIn, value)}
                           totalWidth={300}
                           totalHeight={60}
                           iconSize={30}
@@ -14,7 +15,7 @@ export default function ExpiresInCounter({keyName, updateNewProduct }) {
                           minValue={1}
                           rounded
                           textColor='#4785c3'
-                          iconStyle={{ color: '#4785c3' }}
+                          // iconStyle={{ color: '#4785c3' }}
                           rightButtonBackgroundColor='#aad7f8'
                           leftButtonBackgroundColor='#aad7f8'/>
         </View>

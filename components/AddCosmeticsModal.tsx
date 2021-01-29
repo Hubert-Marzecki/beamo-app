@@ -6,34 +6,45 @@ import NumericInput from 'react-native-numeric-input';
 import ExpiresInCounter from './ExpiresInCounter';
 import { Header } from 'react-native-elements';
 import MoveBack from './MoveBack'
+import {Prod} from '../Model';
+import { KeyNames } from '../Model';
+var uuid = require('react-native-uuid');
 
-export default function AddCosmeticModal({open, closeModal, addProductToList}) {
+export default function AddCosmeticModal(props: {open: boolean, closeModal: () => void, addProductToList : (prod: Prod) => void}) : JSX.Element {
 
-    const  [newCosmetic, setNewCosmetic] = useState({
+    const inistalState : Prod = {
         name: "",
         type: "",
         opened: {},
-        expiresIn: "",
+        expiresIn: 0,
         icon: "",
         photo: "",
-    });
+        id: ""
+    }
 
-    const updateNewProduct = (key, val) => {
-        setNewCosmetic(s => ({...s,  [key]: val}))
+    const  [newCosmetic, setNewCosmetic] = useState<Prod>(inistalState);
+
+    const updateNewProduct  = (keyName: string, val ?: object | Date | undefined ) : void => {
+        setNewCosmetic(s => ({...s,  [keyName]: val}))
         console.log(newCosmetic)
+    }
+    function addProdToListAndResetNewProd  (prod:Prod) : void {
+        props.addProductToList(prod);
+        updateNewProduct(KeyNames.Id, uuid.v1())
+        setNewCosmetic(inistalState);
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={false}
-            visible={open}
-            onRequestClose={closeModal}
+            visible={props.open}
+            onRequestClose={props.closeModal}
         >
 
 
             <KeyboardAvoidingView
-                style={{ backgroundColor: '#4c69a5' }}
+                // @ts-ignore
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 contentContainerStyle={styles.container}
                 scrollEnabled={false}
@@ -44,12 +55,12 @@ export default function AddCosmeticModal({open, closeModal, addProductToList}) {
                         backgroundColor: '#e7eef5',
                         height: 80,
                     }}
-                    leftComponent={<MoveBack closeModal={closeModal}/>}
+                    leftComponent={<MoveBack closeModal={props.closeModal}/>}
                 />
                 <View style={styles.body}>
                 <Text style={styles.header}>ADD NEW PRODUCT</Text>
-                <InputCosmeticInfo keyName={"name"} label={"Name"} updateNewProduct={updateNewProduct} />
-                <InputCosmeticInfo keyName={"type"} label={"Type"} updateNewProduct={updateNewProduct} />
+                <InputCosmeticInfo keyName={KeyNames.Name} label={"Name"} updateNewProduct={updateNewProduct} />
+                <InputCosmeticInfo keyName={KeyNames.Type} label={"Type"} updateNewProduct={updateNewProduct} />
                 <DatePicker  updateNewProduct={updateNewProduct}/>
                 <View style={styles.numPickerWrapper}>
                 <Text style={styles.label}> EXPIRE IN MSC. </Text>
@@ -57,18 +68,13 @@ export default function AddCosmeticModal({open, closeModal, addProductToList}) {
                 </View>
 
                     <View style={styles.buttonWrapper}>
-                        <Pressable onPress={() => addProductToList(newCosmetic)}>
+                        <Pressable onPress={() => addProdToListAndResetNewProd(newCosmetic)}>
                             <Text style={styles.buttonText}>ADD</Text>
                         </Pressable>
                     </View>
-
                 </View>
-
-
                 <View style={styles.footer}>
-
                 </View>
-
             </KeyboardAvoidingView>
         </Modal>
     )
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
     },
     header:{
         fontWeight: 'bold',
-        color: '#aad7f8',
+        color: '#4785c3',
         fontSize: 20,
         marginBottom: 15,
         marginTop: 40,
@@ -118,12 +124,12 @@ const styles = StyleSheet.create({
         width: 150,
         height: 70,
         borderRadius: 40,
-        backgroundColor: "#aad7f8",
+        backgroundColor: '#4785c3',
         alignItems: 'center',
         justifyContent: 'center',
         borderColor: '#e7eef5',
         borderWidth: 5,
-        marginTop: 10,
+        marginTop: 40,
 
     },
     buttonText:{
