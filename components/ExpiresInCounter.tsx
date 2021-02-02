@@ -14,10 +14,10 @@ export default function ExpiresInCounter(props: {keyName:string, updateNewProduc
                           step={1}
                           minValue={1}
                           rounded
-                          textColor='#4785c3'
+                          textColor='#3d7383'
                           // iconStyle={{ color: '#4785c3' }}
-                          rightButtonBackgroundColor='#aad7f8'
-                          leftButtonBackgroundColor='#aad7f8'/>
+                          rightButtonBackgroundColor='#EDC7C2'
+                          leftButtonBackgroundColor='#EDC7C2'/>
         </View>
     )
 }

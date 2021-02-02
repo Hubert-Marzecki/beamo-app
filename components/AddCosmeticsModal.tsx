@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Modal, KeyboardAvoidingView } from 'react-native';
 import InputCosmeticInfo from './InputCosmeticInfo';
 import DatePicker from './DatePicker';
@@ -8,7 +8,7 @@ import { Header } from 'react-native-elements';
 import MoveBack from './MoveBack'
 import {Prod} from '../Model';
 import { KeyNames } from '../Model';
-var uuid = require('react-native-uuid');
+// var uuid = require('react-native-uuid');
 
 export default function AddCosmeticModal(props: {open: boolean, closeModal: () => void, addProductToList : (prod: Prod) => void}) : JSX.Element {
 
@@ -23,15 +23,19 @@ export default function AddCosmeticModal(props: {open: boolean, closeModal: () =
     }
 
     const  [newCosmetic, setNewCosmetic] = useState<Prod>(inistalState);
-
+    const [isIconModalVisible, setIsIconModalVisible] = useState<boolean>(false)
     const updateNewProduct  = (keyName: string, val ?: object | Date | undefined ) : void => {
         setNewCosmetic(s => ({...s,  [keyName]: val}))
-        console.log(newCosmetic)
     }
     function addProdToListAndResetNewProd  (prod:Prod) : void {
         props.addProductToList(prod);
-        updateNewProduct(KeyNames.Id, uuid.v1())
+        // const id = uuid.v1()
+        // updateNewProduct(KeyNames.Id, id)
         setNewCosmetic(inistalState);
+    }
+
+    function closeIconModal() {
+        setIsIconModalVisible(false)
     }
 
     return(
@@ -52,7 +56,7 @@ export default function AddCosmeticModal(props: {open: boolean, closeModal: () =
             >
                 <Header
                     containerStyle={{
-                        backgroundColor: '#e7eef5',
+                        backgroundColor: '#EEE7DE',
                         height: 80,
                     }}
                     leftComponent={<MoveBack closeModal={props.closeModal}/>}
@@ -65,6 +69,15 @@ export default function AddCosmeticModal(props: {open: boolean, closeModal: () =
                 <View style={styles.numPickerWrapper}>
                 <Text style={styles.label}> EXPIRE IN MSC. </Text>
                 <ExpiresInCounter keyName={'expiresIn'} updateNewProduct={updateNewProduct}/>
+                <View>
+                    <Pressable>
+<Text>DUPA?</Text>
+                    </Pressable>
+                    <Pressable>
+                        <Text>DUPA</Text>
+
+                    </Pressable>
+                </View>
                 </View>
 
                     <View style={styles.buttonWrapper}>
@@ -83,13 +96,13 @@ export default function AddCosmeticModal(props: {open: boolean, closeModal: () =
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e7eef5',
+        backgroundColor: '#EEE7DE',
         justifyContent: 'center',
         alignItems: 'center',
     },
     header:{
         fontWeight: 'bold',
-        color: '#4785c3',
+        color: '#EA867F',
         fontSize: 20,
         marginBottom: 15,
         marginTop: 40,
@@ -100,14 +113,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'stretch',
-        backgroundColor: '#e7eef5',
+        backgroundColor: '#EEE7DE',
     },
     numPickerWrapper:{
         alignItems: 'flex-start',
     },
     label:{
         fontWeight: 'bold',
-        color: '#4785c3',
+        color: '#EA867F',
         fontSize: 15,
         paddingLeft: 12,
         marginTop: 10,
@@ -124,10 +137,10 @@ const styles = StyleSheet.create({
         width: 150,
         height: 70,
         borderRadius: 40,
-        backgroundColor: '#4785c3',
+        backgroundColor: '#EA867F',
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: '#e7eef5',
+        borderColor: '#EEE7DE',
         borderWidth: 5,
         marginTop: 40,
 

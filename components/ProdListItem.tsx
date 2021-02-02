@@ -18,7 +18,7 @@ export default function ProdListItem(props: {item: Prod, key:number, deleteProd:
         setTimeLeft(timeToExpire)
         setInterval(function() {
                 setTimeLeft(timeToExpire)
-        },dayInMilliseconds );
+        }, 1000 );
     }, [timeLeft])
 
     const openDate : string = moment(props.item.opened).format("DD/MM/YY")
@@ -36,18 +36,21 @@ const closeModal : () => void = () => {
             onPress={() => openModal()}
         >
         <ListItem
-            containerStyle={{backgroundColor: 'white', marginTop: 10, marginRight: 10, marginLeft: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: "center"}}
+            containerStyle={{backgroundColor: '#edc7c2', marginTop: 10, marginRight: 10, marginLeft: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: "center"}}
         >
             <View style={styles.counterContainer}>
 
                 <CountdownCircleTimer
                     isPlaying
-                    duration={10}
+                    duration={30}
                     colors={[
                         ['#004777', 0.33],
                         ['#F7B801', 0.33],
                         ['#A30000', 0.33],
+                        ['#000000', 0.1],
                     ]}
+
+                    trailColor={"#ffffff"}
                     size={100}
                     onComplete={() => {
                         console.log('ON_COMPLETE BEFORE RETURN')
@@ -57,36 +60,36 @@ const closeModal : () => void = () => {
                     <View style={styles.circle} >
                         <Image style={{height: 50, width: 50}} source={require('../assets/cosmetics.png')}/>
                     </View>
-                   
                 </CountdownCircleTimer>
+                <Badge value={timeLeft}
+                       badgeStyle={{ padding: 10, marginTop: 3, backgroundColor: '#EA867F'}}
+                />
             </View>
             {/*<View style={styles.circle} >*/}
             {/*    <Image style={{height: 50, width: 50}} source={require('../assets/cosmetics.png')}/>*/}
             {/*</View>*/}
             {/*<Avatar rounded source={{ uri: ava }} />*/}
-            <ListItem.Content>
-                <ListItem.Title style={{color: 'black', fontWeight: 'bold', marginTop:5}}>
+            <ListItem.Content style={{marginLeft: 10}}>
+                <ListItem.Title style={{color: '#3d7383', fontWeight: 'bold', marginTop:5}}>
                     {props.item.name}
                 </ListItem.Title>
-                <ListItem.Subtitle style={{color: 'black'}}>
-                    Type: {props.item.type}
+                <ListItem.Subtitle style={{color: '#EA867F'}}>
+                    <Text style={{fontWeight: "bold"}}>Type:  </Text> {props.item.type}
                 </ListItem.Subtitle>
-                <ListItem.Subtitle style={{color: 'black'}}>
-                    from: {openDate}
+                <ListItem.Subtitle style={{color: '#EA867F'}}>
+                    <Text style={{fontWeight: "bold"}}>From: </Text> {openDate}
                 </ListItem.Subtitle>
-                <ListItem.Subtitle style={{color: 'black'}}>
-                    to: {expDate}
+                <ListItem.Subtitle style={{color: '#EA867F'}}>
+                   <Text style={{fontWeight: "bold"}}>To : </Text>  {expDate}
                 </ListItem.Subtitle>
-                <ListItem.Subtitle style={{color: 'black'}}>
+                <ListItem.Subtitle style={{color: '#EA867F'}}>
                     {/*Expires: {expDate}*/}
                 </ListItem.Subtitle>
             </ListItem.Content>
             {/*<Badge value="99+" status="error" />*/}
-            <Badge value={timeLeft} status="success"
-                   badgeStyle={{ padding: 10, margin: 0 }}
-            />
+
             {/*<ListItem.Chevron color="black"></ListItem.Chevron>*/}
-            <ProdInfo item={props.item} open={isModalOpen} closeModal={closeModal} key={props.key } deleteProd={props.deleteProd}/>
+            <ProdInfo item={props.item} open={isModalOpen} closeModal={closeModal} deleteProd={props.deleteProd}/>
         </ListItem>
         </Pressable>
 
@@ -98,14 +101,14 @@ const styles = StyleSheet.create({
     circle:{
         height: 80,
         width: 80,
-        backgroundColor: 'white',
+        backgroundColor: '#3D7383',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
     },
 
     counterContainer: {
-        height: 100
+        height: 120
     },
     remainingTime: {
         fontSize: 46,

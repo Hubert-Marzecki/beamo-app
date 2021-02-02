@@ -23,6 +23,10 @@ export default function App() : JSX.Element {
 
   const [prodList, setProdList] = useState<Array<Prod>>([])
 
+useEffect(() => {
+  console.log(prodList)
+},[prodList]);
+
 
 function openModal() : void {
  setIsModalOpen(true)
@@ -33,18 +37,20 @@ function openModal() : void {
 
   const  deleteProd = (prod:Prod) => {
     setProdList(s => {
-    const newList = s.filter(item => item.id !== prod.id)
+    const newList = s.filter(item => item.name !== prod.name)
       return newList
     })
   }
 
 
   const addProductToList = (newProd: Prod) : void => {
-          setProdList(s =>{
+          setProdList(s => {
           const list = s.concat(newProd)
           return list;
     }
+
 )
+
     setIsModalOpen(false)
   }
 
@@ -53,7 +59,7 @@ function openModal() : void {
       return (
           <View style={styles.body}>
             <Image style={styles.img} source={require('./assets/logo.png')} />
-            <Text style={styles.bodyText}>Add your cosmetics</Text>
+            <Text style={styles.bodyText}> Add once - never forget!</Text>
           </View>
       )
       } else {
@@ -70,7 +76,7 @@ function openModal() : void {
     <View style={styles.container}>
       <Header
           containerStyle={{
-            backgroundColor: '#4c69a5',
+            backgroundColor: '#3d7383',
             flex:1
           }}
           // leftComponent={{ icon: 'menu', color: '#fff' }}
@@ -102,7 +108,7 @@ const styles = StyleSheet.create({
   },
   nav:{
     flex: 1,
-    backgroundColor: '#4c69a5',
+    backgroundColor: '#3d7383',
     alignSelf: 'stretch'
   },
   body:{
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'stretch',
-    backgroundColor: "#aad7f8",
+    backgroundColor: "#EEE7DE",
   },
   img:{
 
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
   bodyList:{
     flex: 8,
     alignSelf: 'stretch',
-    backgroundColor: "#aad7f8",
+    backgroundColor: "#EEE7DE",
   },
   bodyText:{
     fontWeight: 'bold',
@@ -128,7 +134,7 @@ const styles = StyleSheet.create({
   },
   footer:{
     flex: 1,
-    backgroundColor: '#4c69a5',
+    backgroundColor: '#3D7383',
     alignSelf: 'stretch',
       zIndex: 1,
     alignItems: 'center',
@@ -138,13 +144,13 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 100 / 2,
-    backgroundColor: "#aad7f8",
+    backgroundColor: "#EA867F",
     alignItems: 'center',
     justifyContent: 'center',
     position: "absolute",
     top: -35,
     borderColor: 'white',
-    borderWidth: 2
+    borderWidth: 4
   },
   buttonText:{
     fontSize: 40,

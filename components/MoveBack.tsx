@@ -7,7 +7,7 @@ export default function MoveBack(props: {closeModal : () => void}) {
             reverse
             name='home'
             type='ionicon'
-            color='#aad7f8'
+            color='#EDC7C2'
             onPress={() => props.closeModal()}
         />
         )

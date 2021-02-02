@@ -10,7 +10,7 @@ export default function  InputCosmeticInfo (props: {keyName: KeyNames, updateNew
             <Input style={styles.input}
                    label={props.label}
                    labelStyle={{alignSelf: 'stretch', color: 'black', paddingTop: 30}}
-                   inputStyle={{color: 'grey'}}
+                   inputStyle={{color: '#3D7383'}}
                    onChangeText={val => props.updateNewProduct(props.keyName, val )}
             />
         </View>
@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         marginLeft: 50,
         marginRight: 50,
-        backgroundColor: '#e7eef5',
+        backgroundColor: '#EDC7C2',
         justifyContent: 'center',
-        shadowColor: "#ff0000",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -39,6 +38,6 @@ const styles = StyleSheet.create({
         marginBottom: 3,
     },
     input: {
-        color: '#4785c3', textDecorationLine: 'none'
+        color: '#3D7383', textDecorationLine: 'none'
     }
 })

@@ -10,7 +10,7 @@ import {Prod} from '../Model';
 import { KeyNames } from '../Model';
 import moment from 'moment';
 
-export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: () => void, key:number, deleteProd: (prod: Prod) => void}) {
+export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: () => void,  deleteProd: (prod: Prod) => void}) {
 
 
     const [ timeLeft, setTimeLeft] = useState<string>();
@@ -25,7 +25,7 @@ export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: 
         setTimeLeft(timeToExpire)
         setInterval(function() : void {
             setTimeLeft(timeToExpire)
-        },dayInMilliseconds );
+        }, 1000 );
     }, [timeLeft])
 
 
@@ -45,7 +45,7 @@ export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: 
             >
                 <Header
                     containerStyle={{
-                        backgroundColor: '#e7eef5',
+                        backgroundColor: '#EEE7DE',
                         height: 80,
                     }}
                     leftComponent={<MoveBack closeModal={props.closeModal}/>}
@@ -62,7 +62,7 @@ export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: 
                     <Text style={styles.labelBigger}> Expires {timeLeft} </Text>
 
                     <View style={styles.buttonWrapper}>
-                        <Pressable onPress={() => {props.deleteProd(props.item), console.log("dada")}}>
+                        <Pressable onPress={() => {props.deleteProd(props.item), console.log(props.item)}}>
                             <Text style={styles.buttonText}>DELETE</Text>
                         </Pressable>
                     </View>
@@ -76,13 +76,13 @@ export default function ProdInfo(props: {item: Prod, open: boolean, closeModal: 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e7eef5',
+        backgroundColor: '#EEE7DE',
         justifyContent: 'center',
         alignItems: 'center',
     },
     header:{
         fontWeight: 'bold',
-        color: '#4785c3',
+        color: '#3d7383',
         fontSize: 20,
         marginBottom: 55,
         marginTop: 15,
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'stretch',
-        backgroundColor: '#e7eef5',
+        backgroundColor: '#EEE7DE',
     },
 
     circle:{
         height: 100,
         width: 100,
-        backgroundColor: '#4785c3',
+        backgroundColor: '#3d7383',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
@@ -111,14 +111,14 @@ const styles = StyleSheet.create({
     },
     label:{
         fontWeight: 'bold',
-        color: '#aad7f8',
+        color: '#EDC7C2',
         fontSize: 15,
         paddingLeft: 12,
         textAlign: 'center',
     },
     labelBigger:{
         fontWeight: 'bold',
-        color: '#4785c3',
+        color: '#EA867F',
         fontSize: 20,
         paddingLeft: 12,
         marginTop: 20,
@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
         width: 150,
         height: 70,
         borderRadius: 40,
-        backgroundColor: "#aad7f8",
+        backgroundColor: "#EDC7C2",
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: '#e7eef5',
+        borderColor: '#EA867F',
         borderWidth: 5,
         marginTop: 20,
     },

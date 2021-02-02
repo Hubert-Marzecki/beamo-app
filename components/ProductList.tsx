@@ -17,7 +17,13 @@ export default function ProductList(props: {prods: Prod[], deleteProd: (prod: Pr
         <ScrollView >
             {
                 props.prods.map((item, index) => {
-                 return <ProdListItem  item={item} key={index} deleteProd={props.deleteProd}/>
+                 return (
+                     <View key={index}>
+                         <ProdListItem  item={item} key={index} deleteProd={props.deleteProd}/>
+
+                     </View>
+                     )
+
                 })
             }
 

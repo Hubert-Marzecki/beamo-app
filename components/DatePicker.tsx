@@ -36,9 +36,9 @@ export  default  function DatePicker(props: {updateNewProduct: (key: KeyNames, v
         <View
             style={{
             alignSelf: 'stretch',
-                backgroundColor: '#e7eef5',
+                backgroundColor: '#EDC7C2',
                 justifyContent: 'center',
-                shadowColor: "#182835",
+                shadowColor: "#EDC7C2",
                 height: 80,
                 shadowOffset: {
                     width: 0,
@@ -57,7 +57,7 @@ export  default  function DatePicker(props: {updateNewProduct: (key: KeyNames, v
                     onPress={showDatepicker}  >
                     <Text
                         style={{
-                            color: '#4785c3',
+                            color: '#3D7383',
                             paddingTop: 20,
                             paddingBottom: 20,
                             paddingLeft: 12,
